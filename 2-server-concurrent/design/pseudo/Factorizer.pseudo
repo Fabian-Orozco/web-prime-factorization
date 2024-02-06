@@ -1,0 +1,44 @@
+class Factorizer which inherits from Assembler // inherits from Assembler so it inherits from Thread
+  procedure calculate_prime_factors
+    if value % 2 = 0 do
+      call add_factors(value, 2, FactorsArray)
+    end if
+    
+    for value % currentOddNumber = 0 do
+      call add_factors(value, currentOddNumber, FactorsArray)
+      currentOddNumber := nextOddNumber
+    end for
+
+    if value > 2 //the last factor is a prime, add it to the array
+      push value into FactorsArray
+  end procedure
+  
+  procedure add_factors(number, divisor, FactorsArray):
+    exponent := 0
+    while number % divisor = 0 divisor
+      if exponent equal = 0
+        push divisor into FactorsArray
+      else increase exponent
+
+      number := number/divisor
+    end while
+
+    push exponent into FactorsArray
+  end procedure
+
+  procedure run()
+    call consumeForever
+  end procedure
+
+  procedure consume (Number)
+    call calculate_prime_factors
+    produce factorization into current Number
+  end procedure
+
+  procedure consumeForever
+    while (true) do
+      assert if stopCondition not true
+      call consume(NextNumber)
+    end while
+  end procedure
+end Class

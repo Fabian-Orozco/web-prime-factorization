@@ -1,0 +1,41 @@
+class Packer: //inherits from Assembler
+  procedure Packer:
+    initialize Queues
+  end procedure
+
+  procedure ~Packer:
+    send stopCondition
+    delete
+  end procedure
+
+  procedure full(RequestIndex):
+    return bool := client requests and response are equal in quantity
+  end procedure
+
+  procedure run:
+    call consumeForever
+  end procedure
+
+  procedure consume(Number):
+    consume Number
+      extract data from Number
+      add data to Response
+
+    if HttpResponse is full
+      produce HttpReqRes
+      send HttpReqRes to clientDispatcher
+    end if
+  end procedure
+
+  procedure consumeForever:
+    while (true) do
+      assert if stopCondition not true
+      call consume(NextNumber)
+    end while
+  end procedure
+
+  static procedure getInstance:
+    declare static Packer
+    return declared static Packer reference
+  end procedure
+end Class

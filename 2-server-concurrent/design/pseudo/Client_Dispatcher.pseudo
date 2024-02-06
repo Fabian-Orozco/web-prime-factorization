@@ -1,0 +1,30 @@
+class Client Dispatcher:  //inherits from Assembler
+  procedure ClientDispatcher:  //do nothing here
+  end procedure
+
+  procedure ~ClientDispatcher:
+    delete Queue
+  end procedure
+
+  procedure getInstance:
+    declare clientdispatcher as static ClientDispatcher;
+    return clientdispatcher
+  end procedure
+
+  procedure consumeForever:
+    while (true) do
+      assert stopCondition not true
+      call consume(data)
+    end while
+  end procedure
+
+  procedure consume(data):
+    consume data
+    assemble HttpResponse
+    send HttpResponse to Client
+  end procedure
+
+  procedure run:
+    call consumeForever    
+  end procedure
+end class

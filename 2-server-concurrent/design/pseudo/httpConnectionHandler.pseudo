@@ -1,0 +1,29 @@
+class HttpConnectionHandler: //inherits from Consumer
+  procedure HttpConnectionHandler:  //do nothing here
+  end
+
+  procedure ~HttpConnectionHandler:
+    delete Queue
+  end
+
+  procedure run:
+    call consumeForever
+  end
+
+  procedure handleHttpRequest:
+    consume HttpRequest
+  end
+
+  procedure route:
+    assert HttpRequest validity
+  end
+  
+  procedure consume:
+    consume Socket from SocketQueue
+    produce HttpRequest and HttpResponse into HttpRequestQueue
+  end
+
+  procedure setApplicationQueue(ArrayOfApps):
+    set this->AplicationsQueue := ArrayOfApps
+  end
+end class

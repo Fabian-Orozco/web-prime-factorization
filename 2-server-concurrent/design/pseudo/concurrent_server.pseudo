@@ -1,0 +1,58 @@
+##########
+Web Server
+##########
+
+HttpServer:
+  // start before accepting all connections
+  declare array of HttpConnectionHandlers size of argv[2]
+  initialize HttpConnectionHandlers
+  start threads
+  acceptAllConnections
+  // continue with the code
+
+HttpConnectionHandlers:
+  consume Sockets from SocketsQueue
+  produce HttpRequests into HttpRequestQueue
+
+RequestDispatcher:
+
+  while server is running do
+    consume HttpRequest from HttpRequestQueue
+    produce HttpRequest into AppHttpRequestQueue
+  end
+
+###############
+Web Application
+###############
+
+FactWebApp:
+  consume HttpRequest from AppHttpRequestQueue
+  check for each HttpRequest -> its requested Webapplication
+  extract additional data from each HttpRequest
+  produce Numbers into the NumbersQueue of the requested app
+
+Factorizer:
+  declare array of Factorizers size of available threads in system
+  initialize Factorizers
+
+  while server is running do
+    consume from NumbersQueue
+    call calculate_prime_factors
+    input results into the factorizationsQueue
+  end
+
+Packer:
+  consume from factorizationsQueue
+  assemble HttpResponse
+  produce into DispatcherQueue
+
+Dispatcher:
+  consume httpResponse from DispatcherQueue
+  if client requests are fullfilled do
+    assemble HttpRequest and Response
+    send to clientDispatcher
+  end
+
+Client Dispatcher:
+  consume HttpReqRes
+  send response to Client

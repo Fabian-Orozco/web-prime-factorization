@@ -1,0 +1,34 @@
+class FactWebApp: //inherits from HttpApp
+  
+  procedure FactWebApp:
+    Init Queues
+    key := fact
+  end procedure
+
+  procedure  ~FactWebApp:
+    delete Queues
+    delete threads
+  end procedure
+
+  procedure serveFactorization:
+    consume HttpRequest
+    extract data
+    produce integers into Factorizer thread
+  end procedure
+
+  procedure start:
+    start threads
+  end procedure
+
+  procedure handleHttpRequest(HttpRequest&, httpResponse&):
+    if HttpRequest key is equal to this application
+      return true
+    else return false
+  end procedure
+
+  procedure stop:
+    send stopCondition
+    clear Queues
+    stop threads
+  end procedure
+end class
