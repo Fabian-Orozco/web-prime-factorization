@@ -1,0 +1,9 @@
+procedure start(argc, argv) do
+  // start before accepting all connections
+  declare array of HttpConnectionHandlers size of argv[2]
+  initialize HttpConnectionHandlers
+  start threads
+  acceptAllConnections()
+  join_threads()
+  // continue with the code
+end
